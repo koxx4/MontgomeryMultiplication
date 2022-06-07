@@ -1,36 +1,56 @@
-#include <iostream>
+/*
+* Montgomery numbers
+* Piotr Wilk 259106, Damian Serwuszok 259201 
+*/
+
 #include <cmath>
+#include <cstdio>
 
-int normalNumbers[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-int transformedNumbers[10];
+#include "../include/MontgomeryNumber.hpp"
 
-int transformIntoMontgomerySpace(int number, int r, int n) {
+#define R_POWER 3
+#define ODD_N 5001
 
-    return (number * r) % n;
+void printfMontgomery(MontgomeryNumber& mNum) {
+
+    printf("Montgomery number: r{%ld}. Untransformed {%ld}, transformed {%ld}.\n",
+     mNum.getR(), mNum.getOriginal(), mNum.getTransformed());
+}
+
+void printfMontgomeryBrief(MontgomeryNumber& mNum) {
+
+    printf("M{%ld},{%ld}",
+     mNum.getR(), mNum.getTransformed());
 }
 
 
 int main() {
 
-    printf("Untransformed numbers:\n");
+    MontgomeryNumber m1(20, R_POWER, ODD_N);
+    MontgomeryNumber m2(30, R_POWER, ODD_N);
+    MontgomeryNumber m3(2, R_POWER, ODD_N);
+    MontgomeryNumber m4(10, R_POWER, ODD_N);
 
-    for(int n : normalNumbers) {
-        printf(" |%d| ", n);
-    }
+   printfMontgomery(m1);
+   printfMontgomery(m2);
+   printfMontgomery(m3);
+   printfMontgomery(m4);
 
-    std::cout << std::endl;
+    printf("Montgomery number 1 reduced: {%ld}.\n", m1.getUntransformed());
 
-    for(int i = 0; i < 10; i++) {
-        transformedNumbers[i] = transformIntoMontgomerySpace(normalNumbers[i], 64, 65);
-    }
+    printf("Montgomery number 2 reduced: {%ld}.\n", m2.getUntransformed());
 
-    printf("Transformed numbers into montgomery space:\n");
+    m1.add(m2);
+    printf("M1 + M2: {%ld}, reduce{%ld}\n", m1.getTransformed(), m1.getUntransformed());
 
-    for(int n : transformedNumbers) {
-        printf(" |%d| ", n);
-    }
+    m1.sub(m4);
+    printf("M1 - M4: {%ld}, reduce{%ld}\n", m1.getTransformed(), m1.getUntransformed());
 
-    std::cout << std::endl;
+    m1.mul(m3);
+    printf("M1 * M3: {%ld}, reduce{%ld}\n", m1.getTransformed(), m1.getUntransformed());
+
+    m1.div(m3);
+    printf("M1 / M3: {%ld}, reduce{%ld}\n", m1.getTransformed(), m1.getUntransformed());
 
     return 0;
 }
