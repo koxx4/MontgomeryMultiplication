@@ -7,6 +7,8 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
+#include <vector>
 
 struct GcdResult {
     int value;
@@ -15,4 +17,9 @@ struct GcdResult {
 };
 
 int gcd(int a, int b, int& x, int& y);
+
 GcdResult* gcd(int a, int b);
+
+long timeAvg(std::vector<long>& measuers);
+
+uint64_t randomInBounds(uint64_t low, uint64_t high);

@@ -7,8 +7,9 @@
 #include <cstdio>
 
 #include "../include/MontgomeryNumber.hpp"
+#include "../include/MontgomeryBenchmark.hpp"
 
-#define R_POWER 3
+#define R_POWER 2
 #define ODD_N 5001
 
 void printfMontgomery(MontgomeryNumber& mNum) {
@@ -21,6 +22,36 @@ void printfMontgomeryBrief(MontgomeryNumber& mNum) {
 
     printf("M{%ld},{%ld}",
      mNum.getR(), mNum.getTransformed());
+}
+
+void tests() {
+
+    printf("transformingIntoMontgomeryBenchmark: %ld ns\n",
+        Tests::transformingIntoMontgomeryBenchmark(20, 5, UINT16_MAX, 5000));
+
+    printf("reducingMontgomeryBenchmark: %ld ns\n",
+        Tests::reducingMontgomeryBenchmark(20, 5, UINT16_MAX, 5000));
+
+    printf("addMontgomeryBenchmark: %ld ns\n",
+        Tests::addMontgomeryBenchmark(5000));
+
+    printf("subMontgomeryBenchmark: %ld ns\n",
+        Tests::subMontgomeryBenchmark(5000));
+
+    printf("divMontgomeryBenchmark: %ld ns\n",
+        Tests::divMontgomeryBenchmark(5000));
+
+    printf("mulMontgomeryBenchmark: %ld ns\n",
+        Tests::mulMontgomeryBenchmark(5000));
+
+    printf("normalModuloMulBenchmark: %ld ns\n",
+        Tests::normalModuloMulBenchmark(5000));
+
+    printf("normalModuloMulSequenceBenchmark: %ld ns %ld numbers\n",
+        Tests::normalModuloMulSequenceBenchmark(UINT16_MAX, UINT32_MAX - 1, 10000, 1000), 10000L);
+
+    printf("mulMontgomerySequenceBenchmark: %ld ns, sequence %ld numbers\n",
+        Tests::mulMontgomerySequenceBenchmark(UINT16_MAX, UINT32_MAX - 1, 10000, 1000), 10000L);
 }
 
 
@@ -51,6 +82,9 @@ int main() {
 
     m1.div(m3);
     printf("M1 / M3: {%ld}, reduce{%ld}\n", m1.getTransformed(), m1.getUntransformed());
+
+
+    tests();
 
     return 0;
 }

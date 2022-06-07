@@ -12,9 +12,9 @@ class MontgomeryNumber {
 
 public:
 
-    //Note: rPower should be at least >= 2
+    //Note: rPower should be at least >= 1
     MontgomeryNumber(uint64_t rPower, uint64_t n);
-    //Note: rPower should be at least >= 2
+    //Note: rPower should be at least >= 1
     MontgomeryNumber(uint64_t number, uint64_t rPower, uint64_t n);
 
     //Basic operation that can be performed on two montgomery numbers
@@ -34,6 +34,9 @@ private:
     uint64_t transformedNum;
     uint64_t rPower;
     uint64_t r;
+    uint64_t rInverse;
+    uint64_t rMinusOne;
+    uint64_t nCof;
     uint64_t n;
 
     uint64_t transformIntoMontgomerySpace(uint64_t number);

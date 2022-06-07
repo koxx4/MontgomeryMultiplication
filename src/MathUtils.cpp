@@ -1,4 +1,6 @@
 #include "../include/MathUtils.hpp"
+#include <cstdint>
+#include <ctime>
 
 int gcd(int a, int b, int& x, int& y) {
 
@@ -22,4 +24,22 @@ GcdResult* gcd(int a, int b) {
     int gcdValue = gcd(a, b, x, y);
 
     return new GcdResult {gcdValue, x, y};
+}
+
+long timeAvg(std::vector<long>& measures) {
+
+    long sum = 0;
+
+    for(long& measure : measures) {
+        sum += measure;
+    }
+
+    return static_cast<long>(sum / measures.size());
+}
+
+uint64_t randomInBounds(uint64_t low, uint64_t high) {
+
+    srand(time(NULL));
+
+    return rand() % (high - low) + high;
 }
