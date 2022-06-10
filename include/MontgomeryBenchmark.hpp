@@ -9,8 +9,8 @@
 #include <cstddef>
 #include "../include/MontgomeryNumber.hpp"
 
-#define DEFAULT_R_POWER 2
-#define DEFAULT_ODD_N 7 // is odd
+#define DEFAULT_R_POWER 6
+#define DEFAULT_ODD_N __UINT64_MAX__ // is odd
 
 namespace Tests {
 

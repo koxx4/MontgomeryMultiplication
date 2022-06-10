@@ -128,28 +128,25 @@ uint64_t mulMontgomerySequenceBenchmark(uint64_t min, uint64_t max, size_t sqeLe
 
     for (size_t i = 0; i < retries; i++) {
 
+        uint64_t singleMeasures = 0;
         std::vector<MontgomeryNumber*> mNumbers;
 
         for (size_t i = 0; i < sqeLength; i++) {
-            mNumbers.push_back(new MontgomeryNumber(randomInBounds(min, max), DEFAULT_R_POWER, DEFAULT_ODD_N));
+            mNumbers.push_back(new MontgomeryNumber(random128InBounds((__uint128_t)INT64_MAX, (__uint128_t)INT64_MAX * 100), DEFAULT_R_POWER, DEFAULT_ODD_N));
         }
 
         MontgomeryNumber *m1 = mNumbers[0];
 
-        Timer timer;
         for (MontgomeryNumber* mNum : mNumbers) {
-
+            Timer timer;
             m1->mul(*mNum);
-        }
-        timer.stop();
-        measures.push_back(timer.getNanos());
-        
-
-        for (size_t i = 0; i < sqeLength; i++) {
-            delete mNumbers[i];
+            timer.stop();
+            singleMeasures += timer.getNanos();
         }
 
+        for (MontgomeryNumber* mnum : mNumbers) delete mnum;
         
+        measures.push_back(singleMeasures);    
     }
 
     return timeAvg(measures);
@@ -177,7 +174,7 @@ uint64_t normalModuloMulBenchmark(uint64_t retries) {
     return timeAvg(measures);
 }
 
-void mul(int64_t& x, int64_t& y) {
+void mul(__int128_t& x, __int128_t& y) {
     x = (x * y) % DEFAULT_ODD_N;
 }
 
@@ -187,21 +184,23 @@ uint64_t normalModuloMulSequenceBenchmark(uint64_t min, uint64_t max, size_t sqe
 
     for (size_t i = 0; i < retries; i++) {
 
-        std::vector<int64_t> numbers(sqeLength);
+        uint64_t singleMeasures = 0;
+        std::vector<__int128_t> numbers(sqeLength);
 
-        for (int64_t& num : numbers) {
-            num = randomInBounds(min, max);
+        for (auto& num : numbers) {
+            num = random128InBounds((__uint128_t)INT64_MAX, (__uint128_t)INT64_MAX * 100);
         }
 
-        int64_t& n1 = numbers[0];
+        __int128_t& n1 = numbers[0];
 
-        Timer timer;
-        for (int64_t& num : numbers) {
+        for (auto& num : numbers) {
+            Timer timer;
             mul(n1, num);
+            timer.stop();
+            singleMeasures += timer.getNanos();
         }
-        timer.stop();
 
-        measures.push_back(timer.getNanos());
+        measures.push_back(singleMeasures);
     }
 
     return timeAvg(measures);

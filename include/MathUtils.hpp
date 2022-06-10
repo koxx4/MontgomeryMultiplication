@@ -23,3 +23,5 @@ GcdResult* gcd(int a, int b);
 long timeAvg(std::vector<long>& measuers);
 
 uint64_t randomInBounds(uint64_t low, uint64_t high);
+
+__uint128_t random128InBounds(__uint128_t low, __uint128_t high);

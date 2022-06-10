@@ -47,11 +47,7 @@ void tests() {
     printf("normalModuloMulBenchmark: %ld ns\n",
         Tests::normalModuloMulBenchmark(5000));
 
-    printf("normalModuloMulSequenceBenchmark: %ld ns %ld numbers\n",
-        Tests::normalModuloMulSequenceBenchmark(UINT16_MAX, UINT32_MAX - 1, 10000, 1000), 10000L);
 
-    printf("mulMontgomerySequenceBenchmark: %ld ns, sequence %ld numbers\n",
-        Tests::mulMontgomerySequenceBenchmark(UINT16_MAX, UINT32_MAX - 1, 10000, 1000), 10000L);
 }
 
 
@@ -83,8 +79,20 @@ int main() {
     m1.div(m3);
     printf("M1 / M3: {%ld}, reduce{%ld}\n", m1.getTransformed(), m1.getUntransformed());
 
+    for (size_t i = 1; i <= 10000000; i *= 10)
+    {
+        printf("--------%ld numbers----------\n", i);
 
-    tests();
+        long normal = Tests::normalModuloMulSequenceBenchmark(UINT16_MAX, UINT32_MAX - 1, i, 100);
+        long montgomery = Tests::mulMontgomerySequenceBenchmark(UINT16_MAX, UINT32_MAX - 1, i, 100);
+        printf("normal: %ld ns\n", normal);
+        printf("montgomery: %ld ns\n", montgomery);
+        printf("montgomery speed up: %.2f%\n", ((double)(normal - montgomery) / (double)normal) * 100);
+    }
+    
+
+
+    //tests();
 
     return 0;
 }

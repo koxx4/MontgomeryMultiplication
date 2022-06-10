@@ -7,7 +7,7 @@
 #include "../include/MathUtils.hpp"
 
 
-MontgomeryNumber::MontgomeryNumber(uint64_t number, uint64_t rPower, uint64_t n) {
+MontgomeryNumber::MontgomeryNumber(__uint128_t number, uint64_t rPower, __uint128_t n) {
     
     this->rPower = rPower;
     this->r = (1 << rPower);
@@ -23,7 +23,7 @@ MontgomeryNumber::MontgomeryNumber(uint64_t number, uint64_t rPower, uint64_t n)
 }
 
 
-MontgomeryNumber::MontgomeryNumber(uint64_t rPower, uint64_t n) {
+MontgomeryNumber::MontgomeryNumber(uint64_t rPower, __uint128_t n) {
 
     this->r = (1 << rPower);
     this->rMinusOne = this->r - 1;
@@ -67,21 +67,21 @@ MontgomeryNumber* MontgomeryNumber::div(MontgomeryNumber& secondNum) {
 }
 
 
-uint64_t MontgomeryNumber::transformIntoMontgomerySpace(uint64_t number) {
+__uint128_t MontgomeryNumber::transformIntoMontgomerySpace(__uint128_t number) {
 
     //original formula is (number * r) % n
     return (number << rPower) % n;
 }
 
-uint64_t MontgomeryNumber::reduce(int64_t number) {
+__uint128_t MontgomeryNumber::reduce(__uint128_t number) {
 
     //uint64_t q = ((number % r) * nCof) % r;
     //We try to represent modulo with bitwise operations to be faster
     //https://stackoverflow.com/questions/3072665/bitwise-and-in-place-of-modulus-operator
-    int64_t q = ((number & rMinusOne) * nCof) & rMinusOne;
+    __int128_t q = ((number & rMinusOne) * nCof) & rMinusOne;
 
     // (number - q * n) / r
-    int64_t a = ((int64_t)number - q * (int64_t)n) >> rPower;
+    __int128_t a = ((__int128_t)number - q * (__int128_t)n) >> rPower;
 
 
     //if (a < 0) a += n;

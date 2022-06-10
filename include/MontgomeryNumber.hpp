@@ -13,9 +13,9 @@ class MontgomeryNumber {
 public:
 
     //Note: rPower should be at least >= 1
-    MontgomeryNumber(uint64_t rPower, uint64_t n);
+    MontgomeryNumber(uint64_t rPower, __uint128_t n);
     //Note: rPower should be at least >= 1
-    MontgomeryNumber(uint64_t number, uint64_t rPower, uint64_t n);
+    MontgomeryNumber(__uint128_t number, uint64_t rPower, __uint128_t n);
 
     //Basic operation that can be performed on two montgomery numbers
     MontgomeryNumber* sub(MontgomeryNumber& secondNum);
@@ -23,23 +23,23 @@ public:
     MontgomeryNumber* mul(MontgomeryNumber& secondNum);
     MontgomeryNumber* div(MontgomeryNumber& secondNum);
     //Data access
-    uint64_t getTransformed() { return transformedNum; };
-    uint64_t getOriginal() { return originalNum; };
-    uint64_t getUntransformed() { return reduce(transformedNum); };
-    uint64_t getR() { return r; };
+    __uint128_t getTransformed() { return transformedNum; };
+    __uint128_t getOriginal() { return originalNum; };
+    __uint128_t getUntransformed() { return reduce(transformedNum); };
+    __uint128_t getR() { return r; };
     
 private:    
 
-    uint64_t originalNum;
-    uint64_t transformedNum;
+    __uint128_t originalNum;
+    __uint128_t transformedNum;
     uint64_t rPower;
-    uint64_t r;
-    uint64_t rInverse;
-    uint64_t rMinusOne;
-    uint64_t nCof;
-    uint64_t n;
+    __uint128_t r;
+    __uint128_t rInverse;
+    __uint128_t rMinusOne;
+    __uint128_t nCof;
+    __uint128_t n;
 
-    uint64_t transformIntoMontgomerySpace(uint64_t number);
-    uint64_t reduce(int64_t number);
+    __uint128_t transformIntoMontgomerySpace(__uint128_t number);
+    __uint128_t reduce(__uint128_t number);
 
 };

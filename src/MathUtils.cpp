@@ -43,3 +43,15 @@ uint64_t randomInBounds(uint64_t low, uint64_t high) {
 
     return rand() % (high - low) + high;
 }
+
+__uint128_t random128InBounds(__uint128_t low, __uint128_t high) {
+
+    uint64_t n1 = rand();
+    uint64_t n2 = rand();
+    uint64_t n3 = rand();
+    uint64_t n4 = rand();
+    //0000 0000 0000 0000
+    __uint128_t x = ((__uint128_t)n1 << 127) | ((__uint128_t)n2 << 95) | ((__uint128_t)n3 << 63) | (__uint128_t)n4 ;
+
+    return x % (high - low) + high;
+}

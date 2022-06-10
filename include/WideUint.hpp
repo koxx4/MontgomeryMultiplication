@@ -128,7 +128,7 @@ struct wide_uint {
                 }
             }
 
-             bytesLeft--;
+            bytesLeft--;
         }
 
         return result;
